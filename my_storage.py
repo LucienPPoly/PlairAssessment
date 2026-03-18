@@ -1,12 +1,6 @@
 import argparse
-import pickle
-import struct
 import sys
-import time
-from datetime import datetime, timezone
 from HDF5Storage import HDF5Storage
-import numpy as np
-import data_generator
 
 
 def main():
@@ -43,16 +37,14 @@ def main():
     if args.storage_file is None:
         parser.error("--storage-file is required")
 
-    storage = HDF5Storage(args.storage_file)
-
-    if args.command == "write":
-        storage.cmd_write()
-    elif args.command == "read":
-        storage.cmd_read(args.start, args.stop)
-    else:
-        parser.print_help()
-        sys.exit(1)
-
+    with HDF5Storage(args.storage_file) as storage:
+        if args.command == "write":
+            storage.cmd_write()
+        elif args.command == "read":
+            storage.cmd_read(args.start, args.stop)
+        else:
+            parser.print_help()
+            sys.exit(1)
 
 if __name__ == "__main__":
     main()

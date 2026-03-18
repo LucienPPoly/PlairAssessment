@@ -1,1 +1,7 @@
 test_data.h5
+.venv
+__pycache__
+.vscode
+basic_storage.py
+*.h5
+test_storage.py
