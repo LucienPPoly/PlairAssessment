@@ -1,7 +1,7 @@
 ---
 title: "Plair Technical Challenge Solution"
 author: Lucien Poissonnier
-date: Feb 17, 2026
+date: Mar 18, 2026
 ---
 
 
@@ -28,13 +28,13 @@ python3 main_storage.py --storage-file <output file> read --start <starting time
 ```
 
 ## Data format choice
-I did some research to find the data format that would best suit the challenge's contraints. I oriented myself toward HDF5 format because it supports matrices, it can orgnanize huge amount of data efficiently and clearly relying on groups and subgroups of data, it can also be queried effitiently as shown in the read_by_time_range() function : while CSV or JSON require the program to scan the entierity of the file, one can use binary masks to retrieve the indexes of the data falling between two timestamps. Other formats like Parquet, SQLite or Zarr wouldn't do because the first two don't handle multi-dimensional arrays, and the later is less mature than HDF5.
+I did some research to find the data format that would best suit the challenge's constraints. I oriented myself toward HDF5 format because it supports matrices, it can orgnanize huge amount of data efficiently and clearly relying on groups and subgroups of data, it can also be queried effitiently as shown in the read_by_time_range() function : while CSV or JSON require the program to scan the entierity of the file, one can use binary masks to retrieve the indexes of the data falling between two timestamps. Other formats like Parquet, SQLite or Zarr wouldn't do because the first two don't handle multi-dimensional arrays, and the latter is less mature than HDF5.
 
 ## Software architecture choice
-The architechure I chose is simple : one Python class (HDF5Storage) hosts the core functions of the reading and writing steps, and a wrapper (my_storage.py) allows for the use of CLI commands and arguments to manipulate this class. This allows for quick reusability across projects.
+The architecture I chose is simple: one Python class (HDF5Storage) hosts the core functions of the reading and writing steps, and a wrapper (my_storage.py) allows for the use of CLI commands and arguments to manipulate this class. This allows for quick reusability across projects.
 
 ## Trade-offs
-* I used a buffer to reduce the amount of on-disk writing on the HDF5 file, while this improves the performances, it brings a risk of loss in data is the program crashes before the buffer is flushed on the disk.
+* I used a buffer to reduce the amount of on-disk writing on the HDF5 file. While this improves the performance, it brings a risk of loss in data if the program crashes before the buffer is flushed on the disk.
 
 
 ## What can be improved
