@@ -1,14 +1,16 @@
 ---
-title: "Plair Technical Challenge"
-author: Emmanuel Pauchard
+title: "Plair Technical Challenge Solution"
+author: Lucien Poissonnier
 date: Feb 17, 2026
-geometry: margin=2cm
-output: pdf_document
 ---
+
+
 # Data Storage Challenge Solution
 
+![Python](https://img.shields.io/badge/Python-3.12.7-blue?style=flat-square&logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-2.4.2-4DABCF?style=flat-square&logo=numpy&logoColor=white) ![h5py](https://img.shields.io/badge/h5py-3.12.1-E8A020?style=flat-square)
+
 ## Dependencies
-This program requires the external librairies numpy and h5py
+This program requires the external librairies [numpy](https://numpy.org/doc/2.4/) and [h5py](https://docs.h5py.org/en/stable/).
 
 ### Quick setup script
 ```bash
@@ -19,10 +21,10 @@ pip install numpy h5py
 ### How to run
 ```bash
 # Write
-python3 data_generator.py --pps 150 --max-mb 500 | python3 my_storage.py --storage-file <output file> write
+python3 data_generator.py --pps 150 --max-mb 500 | python3 main_storage.py --storage-file <output file> write
 
 # Read
-python3 my_storage.py --storage-file <output file> read --start <starting timestamp> --stop <ending timestamp>
+python3 main_storage.py --storage-file <output file> read --start <starting timestamp> --stop <ending timestamp>
 ```
 
 ## Data format choice
@@ -36,6 +38,6 @@ The architechure I chose is simple : one Python class (HDF5Storage) hosts the co
 
 
 ## What can be improved
-* The main point to be improved would be the performances, while I managed to get around 45 kParticles/sec in writing, I feel like there's room for better optimization to be done. Optimization is still a new subject to me so I'll be glad to learn more to improve my skills!
+* The main point to be improved would be the performances, while I managed to get around 45 kParticles/sec in writing, I feel like there's room for better optimization to be done through more advanced batching strategies or lower-level HDF5 tuning. 
 
-* The read_by_timerange() function loads the entireity of the dataset in memory, which can cause problems if we use large ammount of data. This can be improved with an external time index or use subgroups to divide the data in time periods
+* The read_by_timerange() function loads the entireity of the dataset in memory, which can cause problems if we use large ammount of data. This can be improved with an external time index or use subgroups to divide the data in time periods.

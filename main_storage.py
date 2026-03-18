@@ -1,3 +1,19 @@
+#!/usr/bin/env python3
+"""
+CLI entry point for the HDF5 storage backend.
+ 
+Wraps HDF5Storage with an argparse interface so it can be used directly
+from the command line, either to ingest a data stream or to query stored
+particles by time range.
+ 
+Usage:
+    # Write packets streamed from data_generator.py
+    python data_generator.py --pps 150 --max-mb 500 | python my_storage.py --storage-file output.h5 write
+ 
+    # Read particles between two ISO 8601 timestamps
+    python my_storage.py --storage-file output.h5 read --start "2026-02-17T15:32:36" --stop  "2026-02-17T15:32:37"
+"""
+
 import argparse
 import sys
 from HDF5Storage import HDF5Storage

@@ -1,3 +1,19 @@
+#!/usr/bin/env python3
+"""
+HDF5-based storage backend for the Plair data storage challenge.
+ 
+Stores particle data (timestamps, scattering, spectral arrays) into a
+resizable HDF5 file. Incoming packets are buffered in memory and flushed
+to disk all at once to maximize writing speed.
+ 
+Datasets layout:
+  - Timestamps : (N,)        float64  — POSIX epoch seconds
+  - Scatter    : (N, 64, 16) int32    — scattering measurements
+  - Spectral   : (N, 32, 16) int32    — spectral measurements
+ 
+Each row (index i) corresponds to one particle.
+"""
+
 import pickle
 import struct
 import sys
